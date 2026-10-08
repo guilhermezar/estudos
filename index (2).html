@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepConcurso 2027 | GHC - Auxiliar Administrativo</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-hover: #27354a;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-info h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .header-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .countdown-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .countdown-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--warning);
+    }
+
+    .countdown-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .metric-card h3 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .metric-card .val {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      background: #334155;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--success);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .timer-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .timer-display {
+      font-size: 2.2rem;
+      font-family: monospace;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: var(--primary);
+      color: #0f172a;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+      color: #fff;
+    }
+
+    button.btn-sec {
+      background: #334155;
+      color: var(--text);
+    }
+
+    button.btn-sec:hover {
+      background: #475569;
+    }
+
+    .disciplines-header {
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .search-input {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      width: 280px;
+    }
+
+    .accordion-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-btn {
+      width: 100%;
+      text-align: left;
+      padding: 16px;
+      background: transparent;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0;
+    }
+
+    .accordion-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    .disc-badge {
+      font-size: 0.8rem;
+      font-weight: normal;
+      background: #334155;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: var(--primary);
+    }
+
+    .accordion-content {
+      padding: 0 16px 16px 16px;
+      display: none;
+    }
+
+    .accordion-content.open {
+      display: block;
+    }
+
+    .topic-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .topic-title {
+      font-size: 0.93rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .topic-link {
+      display: inline-block;
+      margin-top: 3px;
+      color: var(--primary);
+      text-decoration: underline;
+      font-size: 0.8rem;
+      word-break: break-all;
+    }
+
+    .topic-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px dashed #334155;
+      padding-top: 10px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .questions-tracker {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .questions-tracker input {
+      width: 55px;
+      padding: 4px 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    /* Revisões com palitinhos e histórico visual */
+    .revisions-row {
+      background: #162032;
+      border: 1px solid #223249;
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .revisions-display {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tally-sticks {
+      letter-spacing: 3px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--warning);
+      font-family: monospace;
+    }
+
+    .tally-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #0f172a;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .date-tag {
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .btn-tally {
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .btn-tally:hover {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+
+    .btn-tally-undo {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .btn-tally-undo:hover {
+      color: var(--danger);
+      border-color: var(--danger);
+      background: transparent;
+    }
+
+    .footer-actions {
+      margin-top: 30px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="header-info">
+        <h1>Plataforma de Estudos: GHC 2027</h1>
+        <p>Cargo: <strong>Auxiliar Administrativo</strong> | Edital Atualizado | Banca: FUNDATEC</p>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-val" id="countdownDays">---</div>
+        <div class="countdown-label">Dias até Abril/2027</div>
+      </div>
+    </header>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Progresso Geral do Edital</h3>
+        <div class="val" id="progressPct">0%</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <h3>Total de Revisões Feitas</h3>
+        <div class="val" id="revisionsTotal">0 | 𝍸 0</div>
+      </div>
+      <div class="metric-card">
+        <h3>Horas Líquidas Estudadas</h3>
+        <div class="val" id="totalHours">0h 00m</div>
+      </div>
+      <div class="metric-card">
+        <h3>Questões & Acertos</h3>
+        <div class="val" id="questStats">0 fe / 0%</div>
+      </div>
+    </div>
+
+    <div class="timer-section">
+      <div>
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Contador de Estudo Focado (Pomodoro)</div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+      </div>
+      <div class="timer-controls">
+        <button id="btnStartTimer">Iniciar</button>
+        <button class="btn-sec" id="btnPauseTimer">Pausar</button>
+        <button class="btn-sec" id="btnResetTimer">Resetar (25m)</button>
+        <button class="btn-sec" id="btnAddManualHour">+30m Líquidos</button>
+      </div>
+    </div>
+
+    <div class="disciplines-header">
+      <h2>Edital Verticalizado com Palitinhos de Revisão</h2>
+      <input type="text" id="searchInput" class="search-input" placeholder="Filtrar assunto, autor, lei ou tópico...">
+    </div>
+
+    <div id="disciplinesList"></div>
+
+    <div class="footer-actions">
+      <button class="btn-sec" onclick="exportData()">Exportar Dados (Backup)</button>
+      <button class="btn-sec" style="color: var(--danger);" onclick="resetAllProgress()">Redefinir Tudo</button>
+    </div>
+  </div>
+
+  <script>
+    const editalData = [
+      {
+        id: "portugues",
+        name: "Língua Portuguesa",
+        topics: [
+          { text: "Leitura, interpretação e relação entre ideias em diversos gêneros textuais" },
+          { text: "Fato e opinião, intencionalidade discursiva e implícitos/subentendidos (Fiorin e Savioli)" },
+          { text: "Ideias principais/secundárias e recursos argumentativos (Koch, Orlandi, Guimarães)" },
+          { text: "Linguagem, comunicação, situação comunicativa e variação linguística" },
+          { text: "Gêneros e tipos textuais, e intertextualidade (Marcuschi)" },
+          { text: "Coesão e coerência textuais (Ingedore Koch)" },
+          { text: "Léxico: sinonímia, antonímia, paronímia, homonímia e substituição de palavras" },
+          { text: "Ortografia oficial, hífen e acentuação gráfica (Acordo Ortográfico / VOLP / Aulete)" },
+          { text: "Figuras de linguagem e relações de sentido (Bechara, Cegalla, Cunha & Cintra)" },
+          { text: "Fonologia: fonemas e grafias, relações entre vogais e consoantes" },
+          { text: "Morfologia: classes de palavras, flexões, formação de palavras e vozes verbais" },
+          { text: "Sintaxe de colocação pronominal (próclise, mesóclise, ênclise)" },
+          { text: "Sintaxe de regência verbal, regência nominal e crase (Luft, Bechara, Cegalla)" },
+          { text: "Sintaxe de concordância verbal e nominal (Bechara, Cegalla, Cunha & Cintra)" },
+          { text: "Coordenação e subordinação: conjunções, locuções e pronomes relativos" },
+          { text: "Pontuação: regras e implicações de sentido no período" }
+        ]
+      },
+      {
+        id: "saude",
+        name: "Políticas Públicas de Saúde (SUS)",
+        topics: [
+          { text: "Constituição Federal: Artigos 196 ao 200 (Da Saúde)" },
+          { text: "Lei nº 8.080/1990 e alterações (Promoção, proteção e recuperação da saúde)" },
+          { text: "Lei nº 8.142/1990 (Participação da comunidade na gestão do SUS e transferências financeiras)" },
+          { text: "Conselho Nacional de Saúde: Relatório Final da 8ª Conferência Nacional de Saúde" },
+          { text: "HumanizaSUS: Política Nacional de Humanização" },
+          { text: "Resolução CNS nº 330/2003 (NOB/RH-SUS - Gestão do trabalho e da educação na saúde)" },
+          { text: "Lei nº 10.741/2003 e alterações (Estatuto da Pessoa Idosa)" },
+          { text: "Portaria nº 992/2009 (Política Nacional de Saúde Integral da População Negra)" },
+          { text: "Portaria nº 2.836/2011 (Política Nacional de Saúde Integral LGBT no SUS)" },
+          { text: "Lei nº 13.146/2015 (Lei Brasileira de Inclusão / Estatuto da Pessoa com Deficiência)" },
+          { text: "Portaria GM/MS nº 230/2023 (Programa Nacional de Equidade de Gênero, Raça e Valorização das Trabalhadoras no SUS)" },
+          { text: "Portaria GM/MS nº 1.526/2023 (PNAISPD e Rede de Cuidados à Pessoa com Deficiência - RCPD)" },
+          { text: "Portaria GM/MS nº 1.604/2023 (Institui a PNAES - Política Nacional de Atenção Especializada em Saúde no Âmbito do SUS)" },
+          { text: "Redes de Atenção em Saúde (RAS) e Cuidado Integral em Saúde" },
+          { 
+            text: "CNS: Relatório Final da 17ª Conferência Nacional de Saúde (2023/2025)",
+            link: "https://editora.redeunida.org.br/project/17a-conferencia-nacional-de-saude-relatorio-final/" 
+          },
+          { text: "PINTO, H.; JÚNIOR, H. M. M. Jornada do SUS na busca da Integralidade: Panorama das Políticas para Atenção Primária e Especializada (2025)" },
+          { 
+            text: "MERHY, E. E. Saúde: A cartografia do trabalho vivo (4ª ed., Hucitec, 2014)",
+            link: "https://livros.unb.br/index.php/estante/catalog/book/323" 
+          },
+          { 
+            text: "CECCIM, R. B.; FERLA, A. A. Educação e saúde: ensino e cidadania como travessia de fronteiras (2008)",
+            link: "https://doi.org/10.1590/S1981-77462008000300003" 
+          },
+          { 
+            text: "FERLA, A. A. et al. (Org.). Saúde Mental Coletiva: transoceanizando políticas e práticas locais-globais (2023)",
+            link: "https://editora.redeunida.org.br/project/saude-mental-coletiva-transoceanizando-politicas-e-praticaslocais-globais/" 
+          },
+          { 
+            text: "MACHADO, C. A. et al. (Org). A atuação do SUS em situações de desastre: experiências de reconstrução do cuidado em saúde (2025)",
+            link: "https://editora.redeunida.org.br/project/a-atuacao-do-sus-em-situacoes-de-desastre-experiencias-de-reconstrucao-docuidado-em-saude/" 
+          },
+          { 
+            text: "GIOVANELLA, L. et al. (Org.). Políticas e sistema de saúde no Brasil (2ª ed., Fiocruz, 2012)",
+            link: "https://books.scielo.org/id/c5nm2" 
+          },
+          { 
+            text: "PINTO, H. A.; SANTOS SOUZA SANTANA, J.; CHIORO, A. Por uma transformação digital que assegure o direito à saúde e proteção de dados pessoais (2022)",
+            link: "https://doi.org/10.18310/2446-4813.2022v8n2p361-371" 
+          },
+          { 
+            text: "TOFANI, L. F. N. et al. Caos, organização e criatividade: revisão integrativa sobre as Redes de Atenção à Saúde (2021)",
+            link: "https://doi.org/10.1590/1413-812320212610.26102020" 
+          }
+        ]
+      },
+      {
+        id: "rlm",
+        name: "Raciocínio Lógico",
+        topics: [
+          { text: "Estrutura lógica de relações arbitrárias entre pessoas, lugares, objetos ou eventos fictícios; dedução de novas informações e avaliação de condições" },
+          { text: "Identificação de padrões e lógica de argumentação" },
+          { text: "Sequências lógicas de números, letras, palavras e figuras" },
+          { text: "Diagramas lógicos e conjuntos" },
+          { text: "Proposições e conectivos: conceito de proposição, valores lógicos, proposições simples e compostas" },
+          { text: "Operações lógicas sobre proposições: Negação, Conjunção (e) e Disjunção (ou)" },
+          { text: "Operações lógicas avançadas: Disjunção exclusiva (ou...ou), Condicional (se...então) e Bicondicional (se e somente se)" }
+        ]
+      },
+      {
+        id: "informatica",
+        name: "Informática",
+        topics: [
+          { text: "Sistemas Operacionais (Windows 10 e Windows 11): Área de trabalho, Menu Iniciar, Barra de tarefas e Gerenciador de Tarefas" },
+          { text: "Windows 10 e 11: Operações com arquivos, pastas, bibliotecas, ícones e atalhos (criar, copiar, mover, renomear, excluir, restaurar, propriedades e pesquisa)" },
+          { text: "Windows 10 e 11: Painel de Controle, Lixeira e configurações básicas do sistema" },
+          { text: "Microsoft Word 2019: Ambiente, criação, edição, formatação, salvamento e impressão de documentos" },
+          { text: "Microsoft Word 2019: Faixa de Opções, guias principais (Início, Inserir, Layout, Referências, Revisão, Exibição), revisão, ortografia e ajuda" },
+          { text: "Microsoft Excel 2019: Células, linhas, colunas, planilhas, pastas de trabalho, formatação e impressão" },
+          { text: "Microsoft Excel 2019: Fórmulas e funções básicas, guias da Faixa de Opções (Início, Inserir, Layout, Fórmulas, Dados, Exibição)" },
+          { text: "Navegadores de Internet: Google Chrome, Mozilla Firefox e Microsoft Edge (menus, favoritos, histórico, guias, downloads, configurações e atalhos)" },
+          { text: "Correio Eletrônico: Conceitos essenciais e funcionalidades básicas de e-mails" },
+          { text: "Segurança e Internet: Noções de segurança digital, privacidade, senhas, links suspeitos, vírus, malwares, phishing e cuidados com redes sociais" },
+          { text: "Inteligência Artificial: Conceitos fundamentais de IA e aplicações práticas no cotidiano" },
+          { text: "IA: Modelos generativos, assistentes digitais e ferramentas para escrita, organização, pesquisa e produtividade" },
+          { text: "IA: Funcionamento geral de algoritmos de recomendação e busca" },
+          { text: "IA: Privacidade, limites éticos, reconhecimento de deepfakes, conteúdos manipulados e verificação de informações" }
+        ]
+      },
+      {
+        id: "especificos",
+        name: "Conhecimentos Específicos: Auxiliar Administrativo",
+        topics: [
+          { text: "Estrutura hospitalar, suas áreas, seus meios e fins" },
+          { text: "Procedimentos auxiliares de gestão de pessoas e serviços gerais de saúde" },
+          { text: "Sistemas de registro e informação em saúde, guarda legal e aspectos éticos" },
+          { text: "Administração Pública e Atos Administrativos" },
+          { text: "Licitações e Contratos: Princípios, modalidades, tipos, limites, dispensa e inexigibilidade" },
+          { text: "Lei nº 14.133/2021 (Nova Lei de Licitações) e Decretos nº 3.555/2000 e 10.024/2019" },
+          { text: "Organizações e Administração: Conceitos básicos, fundamentos, planejamento e controle" },
+          { text: "Redação Oficial: Manual de Redação da Presidência da República (2018) e Padrão Ofício" },
+          { text: "Abreviações, formas de tratamento e vocábulos latinos oficiais" },
+          { text: "Comunicação escrita e oral, digitação qualitativa, envelope e endereçamento postal" },
+          { text: "Qualidade no atendimento ao público: presencial, virtual, telefônico e recepção" },
+          { text: "Técnicas secretariais: agendamentos, e-mails e secretariar reuniões" },
+          { text: "Documentação e Arquivo: métodos de arquivamento, normas e noções de arquivística" },
+          { text: "Administração de Materiais: patrimônio, almoxarifado, compras, estoques e inventário" },
+          { text: "Logística, segurança na área de materiais e bens patrimoniais" }
+        ]
+      }
+    ];
+
+    let appState = {
+      progress: {}, // topicKey: { teoria, resumo, questoes, revisado, totalQ, certasQ, revDates: ['dd/mm/aaaa', ...] }
+      totalStudySeconds: 0
+    };
+
+    function loadState() {
+      const saved = localStorage.getItem('ghc_prep_2027_state');
+      if (saved) {
+        try {
+          appState = JSON.parse(saved);
+        } catch(e) {
+          console.error("Erro ao carregar dados", e);
+        }
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('ghc_prep_2027_state', JSON.stringify(appState));
+      updateDashboard();
+    }
+
+    function initCountdown() {
+      const targetDate = new Date('2027-04-01T08:00:00');
+      const now = new Date();
+      const diffTime = targetDate - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const el = document.getElementById('countdownDays');
+      el.innerText = diffDays > 0 ? `${diffDays}` : 'Chegou!';
+    }
+
+    // Função para transformar número em palitinhos (tally marks) agrupados de 5 em 5: 𝍸 (ou ||||/)
+    function getTallyString(count) {
+      if (!count || count <= 0) return '—';
+      const groupsOfFive = Math.floor(count / 5);
+      const remainder = count % 5;
+      let tally = '';
+      for (let i = 0; i < groupsOfFive; i++) {
+        tally += '𝍸 '; // Símbolo Unicode de 5 palitinhos agrupados
+      }
+      for (let j = 0; j < remainder; j++) {
+        tally += '|';
+      }
+      return tally.trim();
+    }
+
+    function renderDisciplines() {
+      const container = document.getElementById('disciplinesList');
+      container.innerHTML = '';
+
+      editalData.forEach(disc => {
+        const item = document.createElement('div');
+        item.className = 'accordion-item';
+
+        const btn = document.createElement('button');
+        btn.className = 'accordion-btn';
+        btn.innerHTML = `
+          <span>${disc.name}</span>
+          <span class="disc-badge">${disc.topics.length} tópicos</span>
+        `;
+
+        const content = document.createElement('div');
+        content.className = 'accordion-content open';
+
+        btn.onclick = () => {
+          content.classList.toggle('open');
+        };
+
+        disc.topics.forEach((topicObj, idx) => {
+          const key = `${disc.id}_${idx}`;
+          const tState = appState.progress[key] || {
+            teoria: false,
+            resumo: false,
+            questoes: false,
+            revisado: false,
+            totalQ: 0,
+            certasQ: 0,
+            revDates: []
+          };
+
+          if (!Array.isArray(tState.revDates)) {
+            tState.revDates = [];
+          }
+
+          const card = document.createElement('div');
+          card.className = 'topic-card';
+          card.setAttribute('data-search', `${disc.name} ${topicObj.text}`.toLowerCase());
+
+          let linkHtml = '';
+          if (topicObj.link) {
+            linkHtml = `<div><a class="topic-link" href="${topicObj.link}" target="_blank" rel="noopener noreferrer">Acessar bibliografia / publicação oficial ↗</a></div>`;
+          }
+
+          // Histórico de datas das revisões
+          let datesBadges = '';
+          if (tState.revDates.length > 0) {
+            datesBadges = tState.revDates.map(d => `<span class="date-tag" title="Revisado em ${d}">📅 ${d}</span>`).join(' ');
+          }
+
+          card.innerHTML = `
+            <div class="topic-title">
+              ${topicObj.text}
+              ${linkHtml}
+            </div>
+            
+            <div class="topic-actions">
+              <div class="checkbox-group">
+                <label><input type="checkbox" ${tState.teoria ? 'checked' : ''} onchange="toggleCheck('${key}', 'teoria', this.checked)"> Teoria</label>
+                <label><input type="checkbox" ${tState.resumo ? 'checked' : ''} onchange="toggleCheck('${key}', 'resumo', this.checked)"> Resumo</label>
+                <label><input type="checkbox" ${tState.questoes ? 'checked' : ''} onchange="toggleCheck('${key}', 'questoes', this.checked)"> Questões</label>
+              </div>
+              <div class="questions-tracker">
+                <span>Acertos:</span>
+                <input type="number" min="0" placeholder="Acertos" value="${tState.certasQ || ''}" onchange="updateQuestions('${key}', 'certas', this.value)">
+                <span>/</span>
+                <input type="number" min="0" placeholder="Total" value="${tState.totalQ || ''}" onchange="updateQuestions('${key}', 'total', this.value)">
+              </div>
+            </div>
+
+            <!-- Fila de Palitinhos de Revisão e Histórico de Datas -->
+            <div class="revisions-row" id="rev_row_${key}">
+              <div class="revisions-display">
+                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Revisões:</span>
+                <span class="tally-sticks" id="tally_txt_${key}">${getTallyString(tState.revDates.length)}</span>
+                <span class="tally-count" id="tally_cnt_${key}">${tState.revDates.length}x</span>
+                <div style="display: inline-flex; gap: 4px; flex-wrap: wrap; margin-left: 6px;" id="dates_list_${key}">
+                  ${datesBadges}
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <button type="button" class="btn-tally" onclick="addRevision('${key}')">+ Revisar Hoje</button>
+                ${tState.revDates.length > 0 ? `<button type="button" class="btn-tally-undo" onclick="undoRevision('${key}')" title="Desfazer última revisão">Desfazer</button>` : ''}
+              </div>
+            </div>
+          `;
+          content.appendChild(card);
+        });
+
+        item.appendChild(btn);
+        item.appendChild(content);
+        container.appendChild(item);
+      });
+    }
+
+    window.toggleCheck = function(key, field, val) {
+      if (!appState.progress[key]) {
+        appState.progress[key] = { teoria: false, resumo: false, questoes: false, revisado: false, totalQ: 0, certasQ: 0, revDates: [] };
+      }
+      appState.progress[key][field] = val;
+      saveState();
+    };
+
+    window.updateQuestions = function(key, type, val) {
+      if (!appState.progress[key]) {
+        appState.progress[key] = { teoria: false, resumo: false, questoes: false, revisado: false, totalQ: 0, certasQ: 0, revDates: [] };
+      }
+      const num = parseInt(val) || 0;
+      if (type === 'certas') appState.progress[key].certasQ = num;
+      if (type === 'total') appState.progress[key].totalQ = num;
+      saveState();
+    };
+
+    // Adiciona uma revisão na data de hoje e registra o palitinho
+    window.addRevision = function(key) {
+      if (!appState.progress[key]) {
+        appState.progress[key] = { teoria: false, resumo: false, questoes: false, revisado: false, totalQ: 0, certasQ: 0, revDates: [] };
+      }
+      if (!Array.isArray(appState.progress[key].revDates)) {
+        appState.progress[key].revDates = [];
+      }
+
+      const today = new Date();
+      const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+      
+      appState.progress[key].revDates.push(formattedDate);
+      saveState();
+      renderDisciplines();
+    };
+
+    // Remove a última revisão caso clicado por engano
+    window.undoRevision = function(key) {
+      if (appState.progress[key] && Array.isArray(appState.progress[key].revDates) && appState.progress[key].revDates.length > 0) {
+        appState.progress[key].revDates.pop();
+        saveState();
+        renderDisciplines();
+      }
+    };
+
+    function updateDashboard() {
+      let totalTopics = 0;
+      let completedTopics = 0;
+      let totalRevisionsCount = 0;
+      let sumCertas = 0;
+      let sumFeitas = 0;
+
+      editalData.forEach(disc => {
+        disc.topics.forEach((_, idx) => {
+          totalTopics++;
+          const k = `${disc.id}_${idx}`;
+          const t = appState.progress[k];
+          if (t) {
+            if (t.teoria && t.questoes) completedTopics++;
+            sumCertas += (t.certasQ || 0);
+            sumFeitas += (t.totalQ || 0);
+            if (Array.isArray(t.revDates)) {
+              totalRevisionsCount += t.revDates.length;
+            }
+          }
+        });
+      });
+
+      const pct = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+      document.getElementById('progressPct').innerText = `${pct}%`;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+
+      // Contador de revisões totais no painel superior com palitinhos
+      const tallyDisplay = getTallyString(totalRevisionsCount);
+      document.getElementById('revisionsTotal').innerText = `${totalRevisionsCount} revisões (${tallyDisplay})`;
+
+      const accRate = sumFeitas > 0 ? Math.round((sumCertas / sumFeitas) * 100) : 0;
+      document.getElementById('questStats').innerText = `${sumFeitas} fe | ${accRate}% ac`;
+
+      const totalSec = appState.totalStudySeconds || 0;
+      const hrs = Math.floor(totalSec / 3600);
+      const mins = Math.floor((totalSec % 3600) / 60);
+      document.getElementById('totalHours').innerText = `${hrs}h ${mins.toString().padStart(2, '0')}m`;
+    }
+
+    let timerSec = 25 * 60;
+    let timerInterval = null;
+
+    const timerDisplay = document.getElementById('timerDisplay');
+    const btnStart = document.getElementById('btnStartTimer');
+    const btnPause = document.getElementById('btnPauseTimer');
+    const btnReset = document.getElementById('btnResetTimer');
+    const btnAddHour = document.getElementById('btnAddManualHour');
+
+    function updateTimerUI() {
+      const m = Math.floor(timerSec / 60);
+      const s = timerSec % 60;
+      timerDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    btnStart.onclick = () => {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (timerSec > 0) {
+          timerSec--;
+          appState.totalStudySeconds = (appState.totalStudySeconds || 0) + 1;
+          updateTimerUI();
+          if (appState.totalStudySeconds % 60 === 0) saveState();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          alert("Sessão Pomodoro finalizada! Faça uma pausa.");
+          timerSec = 25 * 60;
+          updateTimerUI();
+          saveState();
+        }
+      }, 1000);
+    };
+
+    btnPause.onclick = () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      saveState();
+    };
+
+    btnReset.onclick = () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerSec = 25 * 60;
+      updateTimerUI();
+    };
+
+    btnAddHour.onclick = () => {
+      appState.totalStudySeconds = (appState.totalStudySeconds || 0) + 1800;
+      saveState();
+    };
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.getAttribute('data-search');
+        card.style.display = text.includes(term) ? 'flex' : 'none';
+      });
+    });
+
+    window.exportData = function() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "meus_estudos_ghc_2027.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    };
+
+    window.resetAllProgress = function() {
+      if (confirm("Tem certeza que deseja zerar todos os seus dados e marcações?")) {
+        localStorage.removeItem('ghc_prep_2027_state');
+        appState = { progress: {}, totalStudySeconds: 0 };
+        renderDisciplines();
+        updateDashboard();
+      }
+    };
+
+    loadState();
+    initCountdown();
+    renderDisciplines();
+    updateDashboard();
+    updateTimerUI();
+  </script>
+</body>
+</html>
