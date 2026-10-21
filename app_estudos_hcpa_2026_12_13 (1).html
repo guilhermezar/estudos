@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepConcurso | HCPA (13/12/2026) - Assistente Administrativo</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-hover: #27354a;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --success: #22c55e;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --border: #334155;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-info h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .header-info p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .countdown-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .countdown-val {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--warning);
+    }
+
+    .countdown-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .metric-card h3 {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .metric-card .val {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      background: #334155;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: var(--success);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .timer-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .timer-display {
+      font-size: 2.2rem;
+      font-family: monospace;
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: var(--primary);
+      color: #0f172a;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+      color: #fff;
+    }
+
+    button.btn-sec {
+      background: #334155;
+      color: var(--text);
+    }
+
+    button.btn-sec:hover {
+      background: #475569;
+    }
+
+    /* Tabs de Navegação */
+    .tabs-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid transparent;
+      font-size: 1rem;
+      padding: 10px 18px;
+      border-radius: 8px;
+    }
+
+    .tab-btn.active {
+      background: var(--card-bg);
+      color: var(--primary);
+      border-color: var(--border);
+      font-weight: bold;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .disciplines-header {
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .search-input {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      font-size: 0.9rem;
+      width: 280px;
+    }
+
+    .accordion-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-btn {
+      width: 100%;
+      text-align: left;
+      padding: 16px;
+      background: transparent;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 0;
+    }
+
+    .accordion-btn:hover {
+      background: var(--card-hover);
+      color: var(--text);
+    }
+
+    .disc-badge {
+      font-size: 0.8rem;
+      font-weight: normal;
+      background: #334155;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: var(--primary);
+    }
+
+    .accordion-content {
+      padding: 0 16px 16px 16px;
+      display: none;
+    }
+
+    .accordion-content.open {
+      display: block;
+    }
+
+    .topic-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .topic-title {
+      font-size: 0.93rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .topic-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px dashed #334155;
+      padding-top: 10px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .questions-tracker {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .questions-tracker input {
+      width: 55px;
+      padding: 4px 6px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .revisions-row {
+      background: #162032;
+      border: 1px solid #223249;
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .revisions-display {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tally-sticks {
+      letter-spacing: 3px;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--warning);
+      font-family: monospace;
+    }
+
+    .tally-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: #0f172a;
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .date-tag {
+      background: #1e293b;
+      color: #94a3b8;
+      border: 1px solid #334155;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .btn-tally {
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .btn-tally:hover {
+      background: #38bdf8;
+      color: #0f172a;
+    }
+
+    .btn-tally-undo {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .btn-tally-undo:hover {
+      color: var(--danger);
+      border-color: var(--danger);
+      background: transparent;
+    }
+
+    /* Estilo da aba de Referências Recomendadas */
+    .refs-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ref-category-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .ref-category-card h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+      margin-bottom: 12px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 6px;
+    }
+
+    .ref-item {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .ref-item a {
+      color: var(--primary);
+      text-decoration: underline;
+      word-break: break-all;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .footer-actions {
+      margin-top: 30px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="header-info">
+        <h1>Plataforma de Estudos: HCPA</h1>
+        <p>Cargo: <strong>Assistente Administrativo</strong> | Hospital de Clínicas de Porto Alegre</p>
+      </div>
+      <div class="countdown-card">
+        <div class="countdown-val" id="countdownDays">---</div>
+        <div class="countdown-label">Dias até a Prova (13/12/2026)</div>
+      </div>
+    </header>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <h3>Progresso Geral do Edital</h3>
+        <div class="val" id="progressPct">0%</div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <h3>Total de Revisões Feitas</h3>
+        <div class="val" id="revisionsTotal">0 | 𝍸 0</div>
+      </div>
+      <div class="metric-card">
+        <h3>Horas Líquidas Estudadas</h3>
+        <div class="val" id="totalHours">0h 00m</div>
+      </div>
+      <div class="metric-card">
+        <h3>Questões & Acertos</h3>
+        <div class="val" id="questStats">0 fe / 0%</div>
+      </div>
+    </div>
+
+    <div class="timer-section">
+      <div>
+        <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Contador de Estudo Focado (Pomodoro)</div>
+        <div class="timer-display" id="timerDisplay">25:00</div>
+      </div>
+      <div class="timer-controls">
+        <button id="btnStartTimer">Iniciar</button>
+        <button class="btn-sec" id="btnPauseTimer">Pausar</button>
+        <button class="btn-sec" id="btnResetTimer">Resetar (25m)</button>
+        <button class="btn-sec" id="btnAddManualHour">+30m Líquidos</button>
+      </div>
+    </div>
+
+    <!-- Navegação por Abas -->
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('editalTab', this)">📋 Edital Verticalizado</button>
+      <button class="tab-btn" onclick="switchTab('refsTab', this)">🔗 Referências Recomendadas (Links Oficiais)</button>
+    </div>
+
+    <!-- Aba 1: Edital Verticalizado -->
+    <div id="editalTab" class="tab-pane active">
+      <div class="disciplines-header">
+        <h2>Edital HCPA Verticalizado</h2>
+        <input type="text" id="searchInput" class="search-input" placeholder="Filtrar assunto, tópico ou lei...">
+      </div>
+      <div id="disciplinesList"></div>
+    </div>
+
+    <!-- Aba 2: Referências Recomendadas -->
+    <div id="refsTab" class="tab-pane">
+      <div class="disciplines-header">
+        <h2>Referências Recomendadas pelo HCPA</h2>
+      </div>
+      <div class="refs-container" id="refsContainer"></div>
+    </div>
+
+    <div class="footer-actions">
+      <button class="btn-sec" onclick="exportData()">Exportar Dados (Backup)</button>
+      <button class="btn-sec" onclick="document.getElementById('importFile').click()">Importar Backup</button>
+      <input type="file" id="importFile" style="display:none;" onchange="importData(this)">
+      <button class="btn-sec" style="color: var(--danger);" onclick="resetAllProgress()">Redefinir Tudo</button>
+    </div>
+  </div>
+
+  <script>
+    // 1. BANCO DE DADOS DO EDITAL HCPA - ASSISTENTE ADMINISTRATIVO
+    const editalData = [
+      {
+        id: "informatica",
+        name: "Informática",
+        topics: [
+          "Ferramentas de produtividade e armazenamento em nuvem (Google Workspace e Microsoft 365)",
+          "Ferramentas do Office 2016 e posteriores para Windows: Planilhas Eletrônicas (Google Planilhas e Microsoft Excel)",
+          "Ferramentas do Office 2016 e posteriores para Windows: Editor de textos (Google Documentos e Microsoft Word)",
+          "Noções de segurança na internet: ameaças, ataques e métodos de prevenção",
+          "Boas práticas em segurança digital para usuários corporativos e domésticos",
+          "Noções de certificação digital e assinatura digital (padrões ICP-Brasil e afins)"
+        ]
+      },
+      {
+        id: "portugues",
+        name: "Português",
+        topics: [
+          "Sistema ortográfico oficial vigente",
+          "Uso adequado das classes de palavras e suas flexões",
+          "Processos de formação de palavras (derivação, composição, prefixação, sufixação)",
+          "A oração: período simples e período composto (coordenação e subordinação)",
+          "Análise sintática da frase (termos essenciais, integrantes e acessórios)",
+          "Crase: regras de emprego e casos proibitivos/facultativos",
+          "Concordância nominal e verbal",
+          "Regência nominal e verbal",
+          "Elementos de estruturação do texto: recursos de coesão textual",
+          "Pontuação: normas e efeitos de sentido no texto",
+          "Função referencial de pronomes (anáfora, catáfora e referenciação)",
+          "Uso de nexos e conectivos para estabelecer relações lógicas entre segmentos do texto",
+          "Leitura e interpretação de textos de diversos gêneros"
+        ]
+      },
+      {
+        id: "rlm",
+        name: "Raciocínio Lógico",
+        topics: [
+          "Lógica proposicional: proposições simples e compostas; valores lógicos",
+          "Conectivos lógicos: negação, conjunção (e), disjunção (ou), disjunção exclusiva (ou...ou), condicional (se...então) e bicondicional",
+          "Construção de tabelas-verdade; tautologia, contradição e contingência",
+          "Equivalências lógicas (com ênfase na condicional) e negações de proposições compostas",
+          "Leis de De Morgan e proposições com quantificadores lógicos (todo, algum, nenhum)",
+          "Argumentação lógica: validade de argumentos e diagramas lógicos (teoria dos conjuntos)",
+          "Problemas lógicos de verdades e mentiras",
+          "Raciocínio lógico-matemático: aritmética básica (números inteiros, racionais, decimais, razão, proporção e porcentagem)",
+          "Sequências e identificação de padrões numéricos, alfabéticos e geométricos",
+          "Raciocínio analítico: associação lógica entre elementos diversos",
+          "Orientação temporal (datas, calendários, contagem de tempo) e orientação espacial",
+          "Tratamento da informação: leitura, análise e interpretação de tabelas e gráficos",
+          "Resolução de situações-problema: interpretação de enunciados, identificação de relações e estratégias"
+        ]
+      },
+      {
+        id: "especificos",
+        name: "Conhecimentos Específicos",
+        topics: [
+          "Comunicação Não-Violenta (CNV) como escuta-diálogo e transformação de conflitos",
+          "Direitos e Deveres dos Usuários da Saúde/Pacientes (Carta dos Direitos do HCPA e MS)",
+          "Diversidade e Inclusão: Diretrizes do Guia ANS de Diversidade e Inclusão",
+          "Estatuto da Criança e do Adolescente (ECA - Lei nº 8.069/1990 e alterações até Lei nº 15.243/2025)",
+          "Estatuto da Pessoa com Deficiência / Lei Brasileira de Inclusão (LBI - Lei nº 13.146/2015)",
+          "Estatuto da Pessoa Idosa (Lei nº 10.741/2003 e alterações pela Lei nº 14.423/2022)",
+          "Ética Profissional do Servidor Público Civil do Poder Executivo Federal (Decreto nº 1.171/1994)",
+          "Gestão de Almoxarifado, Estoques e Administração de Materiais",
+          "HumanizaSUS: Documento base para gestores e trabalhadores do SUS",
+          "Injúria Racial e Crimes Resultantes de Preconceito (Lei nº 14.532/2023 e Lei nº 7.716/1989)",
+          "Lei Geral de Proteção de Dados Pessoais (LGPD - Lei nº 13.709/2018 e Lei nº 13.853/2019)",
+          "Segurança do Paciente em Serviços de Saúde (Resolução RDC nº 36/2013 e Portaria GM/MS nº 529/2013)",
+          "Segurança e Saúde no Trabalho em Serviços de Saúde: Norma Regulamentadora nº 32 (NR-32)",
+          "Sistema Único de Saúde (SUS): Objetivos, Princípios e Diretrizes (Lei nº 8.080/1990 e Portaria Cons. nº 1/2017)"
+        ]
+      }
+    ];
+
+    // 2. REFERÊNCIAS RECOMENDADAS PELO HCPA
+    const referenciasData = [
+      {
+        category: "Legislação e Saúde Pública",
+        items: [
+          { text: "BRASIL. Agência Nacional de Saúde Suplementar. Guia ANS de diversidade e inclusão. Rio de Janeiro: ANS, 2023.", url: "https://sbafs.org.br/admin/files/docs/file_d8nLY3ei3qoX.pdf" },
+          { text: "BRASIL. Ministério da Saúde. Carta dos Direitos dos Usuários da Saúde, 2011. 3. ed.", url: "https://bvsms.saude.gov.br/bvs/publicacoes/cartas_direitos_usuarios_saude_3ed.pdf" },
+          { text: "BRASIL. Decreto nº 1.171, de 22 de junho de 1994. Aprova o Código de Ética Profissional do Servidor Público Civil do Poder Executivo Federal.", url: "http://www.planalto.gov.br/ccivil_03/decreto/d1171.htm" },
+          { text: "BRASIL. Ministério da Saúde. Portaria de Consolidação GM/MS nº 1, de 28 de setembro de 2017. Consolidação das normas sobre direitos e deveres dos usuários, organização e funcionamento do SUS.", url: "https://bvsms.saude.gov.br/bvs/saudelegis/gm/2017/prc0001_03_10_2017.html" },
+          { text: "BRASIL. Lei nº 8.069, de 13 de julho de 1990. Estatuto da Criança e do Adolescente (ECA).", url: "http://www.planalto.gov.br/ccivil_03/Leis/L8069.htm" },
+          { text: "BRASIL. Lei nº 14.950, de 2 de agosto de 2024. Altera o ECA para dispor sobre direito de visitação à mãe ou pai internados.", url: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/L14950.htm" },
+          { text: "BRASIL. Lei nº 14.987, de 25 de setembro de 2024. Altera o ECA para direito ao atendimento psicossocial aos filhos de pais vitimados por grave violência ou presos.", url: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14987.htm" },
+          { text: "BRASIL. Lei nº 15.243, de 28 de outubro de 2025. Altera o ECA para assistência integral e multiprofissional com problemas decorrentes do uso de drogas.", url: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/l15243.htm" },
+          { text: "BRASIL. Lei nº 8.080, de 19 de setembro de 1990. Lei Orgânica da Saúde (Condições para promoção, proteção e recuperação da saúde).", url: "http://www.planalto.gov.br/ccivil_03/Leis/L8080.htm" },
+          { text: "BRASIL. Lei nº 10.741, de 1º de outubro de 2003. Estatuto da Pessoa Idosa.", url: "https://www.planalto.gov.br/ccivil_03/leis/2003/l10.741.htm" },
+          { text: "BRASIL. Lei nº 14.423, de 22 de julho de 2022. Substitui as expressões 'idoso' por 'pessoa idosa'.", url: "https://www.planalto.gov.br/ccivil_03/_Ato2019-2022/2022/Lei/L14423.htm" },
+          { text: "BRASIL. Lei nº 13.146, de 6 de julho de 2015. Lei Brasileira de Inclusão da Pessoa com Deficiência (Estatuto da PcD).", url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13146.htm" },
+          { text: "BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD).", url: "https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm" },
+          { text: "BRASIL. Lei nº 13.853, de 8 de julho de 2019. Cria a Autoridade Nacional de Proteção de Dados (ANPD).", url: "https://www.planalto.gov.br/ccivil_03/_ato2019-2022/2019/lei/l13853.htm#art1" },
+          { text: "BRASIL. Lei nº 14.532, de 11 de janeiro de 2023. Tipifica como crime de racismo a injúria racial.", url: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/l14532.htm" },
+          { text: "BRASIL. ANVISA. Resolução RDC nº 36, de 25 de julho de 2013. Ações para segurança do paciente em serviços de saúde.", url: "https://bvsms.saude.gov.br/bvs/saudelegis/anvisa/2013/rdc0036_25_07_2013.html" },
+          { text: "BRASIL. Portaria GM/MS nº 529, de 1º de abril de 2013. Institui o Programa Nacional de Segurança do Paciente (PNSP).", url: "https://bvsms.saude.gov.br/bvs/saudelegis/gm/2013/prt0529_01_04_2013.html" },
+          { text: "BRASIL. HumanizaSUS: documento base para gestores e trabalhadores do SUS. Brasília: MS, 2008. 4ª ed.", url: "https://redehumanizasus.net/acervo/humanizasus-documento-base-para-gestores-e-trabalhadores-do-sus-ministerio-da-saude-secretaria-de-atenc%CC%A7a%CC%83o-a-saude-nucleo-tecnico-da-politica/" },
+          { text: "BRASIL. MTE. Norma Regulamentadora nº 32 (NR-32). Segurança e saúde no trabalho em serviços de saúde (Atualizada Portaria 4.219/2022).", url: "https://www.gov.br/trabalho-e-emprego/pt-br/acesso-a-informacao/participacao-social/conselhos-e-orgaos-colegiados/comissao-tripartite-partitaria-permanente/arquivos/normas-regulamentadoras/nr-32-atualizada-2022-2.pdf" },
+          { text: "HOSPITAL DE CLÍNICAS DE PORTO ALEGRE. Carta de direitos e deveres do paciente do HCPA.", url: "https://www.hcpa.edu.br/downloads/carta_direitos_e_deveres_pacientes_completa.pdf" },
+          { text: "PELIZZOLI, M. Comunicação Não-Violenta (CNV) como escuta-diálogo e transformação de conflitos. João Pessoa: EDR-UFPE, 2019.", url: "https://carceraria.org.br/wp-content/uploads/2021/08/ebook-cnv-final-1.pdf" },
+          { text: "FENILI, R. R. Gestão de materiais. Brasília, DF: ENAP, 2015. 168 p.", url: "https://repositorio.enap.gov.br/server/api/core/bitstreams/57bce870-20c5-42a6-b40e-91fc5dec0b9d/content" },
+          { text: "KUMMER, M. J. Gestão de estoques. Curitiba: Instituto Federal do Paraná, 2012.", url: "https://efivest.com.br/wp-content/uploads/2018/09/gestaodeestoques.pdf" }
+        ]
+      },
+      {
+        category: "Informática e Segurança Digital",
+        items: [
+          { text: "CERT.BR. Cartilha de Segurança para Internet oficial.", url: "https://cartilha.cert.br/" },
+          { text: "NIC.BR. Projeto Cidadão na Rede (Vídeos e guias educativos).", url: "https://cidadaonarede.nic.br/pt/" },
+          { text: "NIC.BR. Guias Internet Segura.", url: "https://internetsegura.br" },
+          { text: "GOOGLE. Suporte e documentação oficial do Google Docs / Editores.", url: "https://support.google.com/docs?hl=pt-BR" },
+          { text: "GOOGLE. Suporte e documentação oficial do Google Drive.", url: "https://support.google.com/drive?hl=pt-BR" },
+          { text: "GOOGLE. Suporte oficial do Google Planilhas.", url: "https://support.google.com/docs/topic/9054603?hl=pt-BR" },
+          { text: "GOOGLE. Guia de migração e compatibilidade: Excel e Google Planilhas.", url: "https://support.google.com/docs/answer/13189180?hl=pt-BR" },
+          { text: "GOOGLE. Guia de migração e compatibilidade: Word e Documentos Google.", url: "https://support.google.com/docs/answer/9310150?hl=pt-BR" },
+          { text: "GOOGLE. Serviços corporativos e armazenamento em nuvem.", url: "https://support.google.com/a/users#topic=11499463" },
+          { text: "MICROSOFT. Central de Ajuda e Suporte do Office (Word, Excel e ferramentas).", url: "https://support.microsoft.com/pt-br/" },
+          { text: "MICROSOFT. Central de Ajuda do Microsoft Excel.", url: "https://support.office.com/pt-br/excel" },
+          { text: "MICROSOFT. Central de Ajuda do Microsoft Word.", url: "https://support.microsoft.com/pt-br/word/" },
+          { text: "MICROSOFT. Suporte do OneDrive e armazenamento em nuvem.", url: "https://support.microsoft.com/pt-br/onedrive/" }
+        ]
+      },
+      {
+        category: "Livros e Manuais Gramaticais / Lógica",
+        items: [
+          { text: "CEGALLA, D. P. Novíssima gramática da língua portuguesa. 39. ed. São Paulo: Editora Nacional, 1996.", url: "" },
+          { text: "CUNHA, C.; CINTRA, L. Nova gramática do português contemporâneo. Rio de Janeiro: Lexicon, 2013.", url: "" },
+          { text: "LUFT, C. P. Moderna gramática brasileira. 7. ed. Porto Alegre; Rio de Janeiro: Globo, 1986.", url: "" },
+          { text: "CABRAL, L. C. D.; NUNES, M. C. Raciocínio lógico passo a passo. Rio de Janeiro: Elsevier, 2013.", url: "" },
+          { text: "IEZZI, G.; MURAKAMI, C. Fundamentos de Matemática Elementar - Volume 1: Conjuntos e Funções. 9. ed. Atual, 2013.", url: "" },
+          { text: "MARIANO, F. Raciocínio Lógico Para Concursos – Teoria e Questões. 5. ed. Elsevier, 2012.", url: "" }
+        ]
+      }
+    ];
+
+    let appState = {
+      progress: {},
+      totalStudySeconds: 0
+    };
+
+    function loadState() {
+      const saved = localStorage.getItem('hcpa_prep_2027_state');
+      if (saved) {
+        try {
+          appState = JSON.parse(saved);
+        } catch(e) {
+          console.error("Erro ao carregar dados", e);
+        }
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem('hcpa_prep_2027_state', JSON.stringify(appState));
+      updateDashboard();
+    }
+
+    function initCountdown() {
+      const targetDate = new Date('2026-12-13T08:00:00');
+      const now = new Date();
+      const diffTime = targetDate - now;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const el = document.getElementById('countdownDays');
+      el.innerText = diffDays > 0 ? `${diffDays}` : 'Chegou!';
+    }
+
+    function getTallyString(count) {
+      if (!count || count <= 0) return '—';
+      const groupsOfFive = Math.floor(count / 5);
+      const remainder = count % 5;
+      let tally = '';
+      for (let i = 0; i < groupsOfFive; i++) {
+        tally += '𝍸 ';
+      }
+      for (let j = 0; j < remainder; j++) {
+        tally += '|';
+      }
+      return tally.trim();
+    }
+
+    function renderDisciplines() {
+      const container = document.getElementById('disciplinesList');
+      container.innerHTML = '';
+
+      editalData.forEach(disc => {
+        const item = document.createElement('div');
+        item.className = 'accordion-item';
+
+        const btn = document.createElement('button');
+        btn.className = 'accordion-btn';
+        btn.innerHTML = `
+          <span>${disc.name}</span>
+          <span class="disc-badge">${disc.topics.length} tópicos</span>
+        `;
+
+        const content = document.createElement('div');
+        content.className = 'accordion-content open';
+
+        btn.onclick = () => {
+          content.classList.toggle('open');
+        };
+
+        disc.topics.forEach((topicText, idx) => {
+          const key = `${disc.id}_${idx}`;
+          const tState = appState.progress[key] || {
+            teoria: false,
+            resumo: false,
+            questoes: false,
+            revisado: false,
+            totalQ: 0,
+            certasQ: 0,
+            revDates: []
+          };
+
+          if (!Array.isArray(tState.revDates)) {
+            tState.revDates = [];
+          }
+
+          const card = document.createElement('div');
+          card.className = 'topic-card';
+          card.setAttribute('data-search', `${disc.name} ${topicText}`.toLowerCase());
+
+          let datesBadges = '';
+          if (tState.revDates.length > 0) {
+            datesBadges = tState.revDates.map(d => `<span class="date-tag" title="Revisado em ${d}">📅 ${d}</span>`).join(' ');
+          }
+
+          card.innerHTML = `
+            <div class="topic-title">
+              ${topicText}
+            </div>
+            
+            <div class="topic-actions">
+              <div class="checkbox-group">
+                <label><input type="checkbox" ${tState.teoria ? 'checked' : ''} onchange="toggleCheck('${key}', 'teoria', this.checked)"> Teoria</label>
+                <label><input type="checkbox" ${tState.resumo ? 'checked' : ''} onchange="toggleCheck('${key}', 'resumo', this.checked)"> Resumo</label>
+                <label><input type="checkbox" ${tState.questoes ? 'checked' : ''} onchange="toggleCheck('${key}', 'questoes', this.checked)"> Questões</label>
+              </div>
+              <div class="questions-tracker">
+                <span>Acertos:</span>
+                <input type="number" min="0" placeholder="Acertos" value="${tState.certasQ || ''}" onchange="updateQuestions('${key}', 'certas', this.value)">
+                <span>/</span>
+                <input type="number" min="0" placeholder="Total" value="${tState.totalQ || ''}" onchange="updateQuestions('${key}', 'total', this.value)">
+              </div>
+            </div>
+
+            <div class="revisions-row">
+              <div class="revisions-display">
+                <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600;">Revisões:</span>
+                <span class="tally-sticks">${getTallyString(tState.revDates.length)}</span>
+                <span class="tally-count">${tState.revDates.length}x</span>
+                <div style="display: inline-flex; gap: 4px; flex-wrap: wrap; margin-left: 6px;">
+                  ${datesBadges}
+                </div>
+              </div>
+              <div style="display: flex; gap: 6px; align-items: center;">
+                <button type="button" class="btn-tally" onclick="addRevision('${key}')">+ Revisar Hoje</button>
+                ${tState.revDates.length > 0 ? `<button type="button" class="btn-tally-undo" onclick="undoRevision('${key}')" title="Desfazer última revisão">Desfazer</button>` : ''}
+              </div>
+            </div>
+          `;
+          content.appendChild(card);
+        });
+
+        item.appendChild(btn);
+        item.appendChild(content);
+        container.appendChild(item);
+      });
+    }
+
+    function renderReferences() {
+      const container = document.getElementById('refsContainer');
+      container.innerHTML = '';
+
+      referenciasData.forEach(cat => {
+        const card = document.createElement('div');
+        card.className = 'ref-category-card';
+
+        let itemsHtml = '';
+        cat.items.forEach(item => {
+          let linkTag = item.url ? `<br><a href="${item.url}" target="_blank" rel="noopener noreferrer">Acessar publicação oficial / documento ↗</a>` : '';
+          itemsHtml += `<div class="ref-item">
+            <div>${item.text}</div>
+            ${linkTag}
+          </div>`;
+        });
+
+        card.innerHTML = `
+          <h3>${cat.category}</h3>
+          <div>${itemsHtml}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.switchTab = function(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    };
+
+    window.toggleCheck = function(key, field, val) {
+      if (!appState.progress[key]) {
+        appState.progress[key] = { teoria: false, resumo: false, questoes: false, revisado: false, totalQ: 0, certasQ: 0, revDates: [] };
+      }
+      appState.progress[key][field] = val;
+      saveState();
+    };
+
+    window.updateQuestions = function(key, type, val) {
+      if (!appState.progress[key]) {
+        appState.progress[key] = { teoria: false, resumo: false, questoes: false, revisado: false, totalQ: 0, certasQ: 0, revDates: [] };
+      }
+      const num = parseInt(val) || 0;
+      if (type === 'certas') appState.progress[key].certasQ = num;
+      if (type === 'total') appState.progress[key].totalQ = num;
+      saveState();
+    };
+
+    window.addRevision = function(key) {
+      if (!appState.progress[key]) {
+        appState.progress[key] = { teoria: false, resumo: false, questoes: false, revisado: false, totalQ: 0, certasQ: 0, revDates: [] };
+      }
+      if (!Array.isArray(appState.progress[key].revDates)) {
+        appState.progress[key].revDates = [];
+      }
+
+      const today = new Date();
+      const formattedDate = `${String(today.getDate()).padStart(2, '0')}/${String(today.getMonth() + 1).padStart(2, '0')}/${today.getFullYear()}`;
+      
+      appState.progress[key].revDates.push(formattedDate);
+      saveState();
+      renderDisciplines();
+    };
+
+    window.undoRevision = function(key) {
+      if (appState.progress[key] && Array.isArray(appState.progress[key].revDates) && appState.progress[key].revDates.length > 0) {
+        appState.progress[key].revDates.pop();
+        saveState();
+        renderDisciplines();
+      }
+    };
+
+    function updateDashboard() {
+      let totalTopics = 0;
+      let completedTopics = 0;
+      let totalRevisionsCount = 0;
+      let sumCertas = 0;
+      let sumFeitas = 0;
+
+      editalData.forEach(disc => {
+        disc.topics.forEach((_, idx) => {
+          totalTopics++;
+          const k = `${disc.id}_${idx}`;
+          const t = appState.progress[k];
+          if (t) {
+            if (t.teoria && t.questoes) completedTopics++;
+            sumCertas += (t.certasQ || 0);
+            sumFeitas += (t.totalQ || 0);
+            if (Array.isArray(t.revDates)) {
+              totalRevisionsCount += t.revDates.length;
+            }
+          }
+        });
+      });
+
+      const pct = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0;
+      document.getElementById('progressPct').innerText = `${pct}%`;
+      document.getElementById('progressBar').style.width = `${pct}%`;
+
+      const tallyDisplay = getTallyString(totalRevisionsCount);
+      document.getElementById('revisionsTotal').innerText = `${totalRevisionsCount} revisões (${tallyDisplay})`;
+
+      const accRate = sumFeitas > 0 ? Math.round((sumCertas / sumFeitas) * 100) : 0;
+      document.getElementById('questStats').innerText = `${sumFeitas} fe | ${accRate}% ac`;
+
+      const totalSec = appState.totalStudySeconds || 0;
+      const hrs = Math.floor(totalSec / 3600);
+      const mins = Math.floor((totalSec % 3600) / 60);
+      document.getElementById('totalHours').innerText = `${hrs}h ${mins.toString().padStart(2, '0')}m`;
+    }
+
+    let timerSec = 25 * 60;
+    let timerInterval = null;
+
+    const timerDisplay = document.getElementById('timerDisplay');
+    const btnStart = document.getElementById('btnStartTimer');
+    const btnPause = document.getElementById('btnPauseTimer');
+    const btnReset = document.getElementById('btnResetTimer');
+    const btnAddHour = document.getElementById('btnAddManualHour');
+
+    function updateTimerUI() {
+      const m = Math.floor(timerSec / 60);
+      const s = timerSec % 60;
+      timerDisplay.innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    btnStart.onclick = () => {
+      if (timerInterval) return;
+      timerInterval = setInterval(() => {
+        if (timerSec > 0) {
+          timerSec--;
+          appState.totalStudySeconds = (appState.totalStudySeconds || 0) + 1;
+          updateTimerUI();
+          if (appState.totalStudySeconds % 60 === 0) saveState();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          alert("Sessão Pomodoro finalizada! Faça uma pausa.");
+          timerSec = 25 * 60;
+          updateTimerUI();
+          saveState();
+        }
+      }, 1000);
+    };
+
+    btnPause.onclick = () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      saveState();
+    };
+
+    btnReset.onclick = () => {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerSec = 25 * 60;
+      updateTimerUI();
+    };
+
+    btnAddHour.onclick = () => {
+      appState.totalStudySeconds = (appState.totalStudySeconds || 0) + 1800;
+      saveState();
+    };
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.getAttribute('data-search');
+        card.style.display = text.includes(term) ? 'flex' : 'none';
+      });
+    });
+
+    window.exportData = function() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "meus_estudos_hcpa_2027.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    };
+
+    window.importData = function(fileInput) {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const parsed = JSON.parse(e.target.result);
+          if (parsed && typeof parsed === 'object') {
+            appState = parsed;
+            saveState();
+            renderDisciplines();
+            alert("Backup importado com sucesso!");
+          }
+        } catch(err) {
+          alert("Erro ao ler o arquivo de backup. Certifique-se de que é um .json válido.");
+        }
+      };
+      reader.readAsText(file);
+      fileInput.value = '';
+    };
+
+    window.resetAllProgress = function() {
+      if (confirm("Tem certeza que deseja zerar todos os seus dados e marcações deste edital?")) {
+        localStorage.removeItem('hcpa_prep_2027_state');
+        appState = { progress: {}, totalStudySeconds: 0 };
+        renderDisciplines();
+        updateDashboard();
+      }
+    };
+
+    loadState();
+    initCountdown();
+    renderDisciplines();
+    renderReferences();
+    updateDashboard();
+    updateTimerUI();
+  </script>
+</body>
+</html>
